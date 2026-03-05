@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pool Bolita | Billar & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --naranja: #FF5500;
+            --negro: #121212;
+            --blanco: #ffffff;
+            --gris-oscuro: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--negro);
+            color: var(--blanco);
+            overflow-x: hidden;
+        }
+
+        /* Efecto de manchas de fondo */
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--naranja);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        /* Header / Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('fondo.jpg') no-repeat center center/cover;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+
+        h1 span {
+            color: var(--naranja);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            max-width: 600px;
+        }
+
+        .btn-main {
+            background-color: var(--naranja);
+            color: var(--negro);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--naranja);
+        }
+
+        /* Menu Section */
+        .menu-preview {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-card {
+            background: var(--gris-oscuro);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--naranja);
+            transition: 0.3s;
+        }
+
+        .menu-card:hover {
+            background: #2a2a2a;
+        }
+
+        .menu-card h3 {
+            color: var(--naranja);
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob" style="top: 10%; left: -10%;"></div>
+    <div class="blob" style="bottom: 10%; right: -10%;"></div>
+
+    <header>
+        <h1>POOL<br><span>BOLITA</span></h1>
+        <p class="tagline">El punto exacto entre el mejor tiro y el mejor taco en Villagrán.</p>
+        <a href="#menu" class="btn-main">Ver Menú Completo</a>
+    </header>
+
+<section id="menu" class="menu-preview">
+    <div class="container">
+        <h2 class="section-title">Nuestro <span>Menú Completo</span></h2>
+        
+        <div class="menu-filters">
+            <button class="filter-btn active" onclick="filterMenu('todos', event)">Todos</button>
+            <button class="filter-btn" onclick="filterMenu('hamburguesas', event)">Burgers</button>
+            <button class="filter-btn" onclick="filterMenu('antojitos', event)">Antojitos & Tacos</button>
+            <button class="filter-btn" onclick="filterMenu('snacks', event)">Snacks</button>
+            <button class="filter-btn" onclick="filterMenu('bebidas', event)">Bebidas</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            
+            <div class="menu-card" data-category="hamburguesas">
+                <div class="card-img">
+                    <img src="hamburguesasencilla.jpg" alt="Hamburguesa Sencilla">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Hamburguesa Sencilla</h3>
+                        <p>Carne, lechuga, cebolla, jitomate, cátsup, mostaza, mayonesa y chiles.</p>
+                    </div>
+                    <span class="price-tag">$50</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="hamburguesas">
+                <div class="card-img">
+                    <img src="hamburguesahawaiiana.jpg" alt="Hawaiana">
+                    <span class="badge-mini">Favorita</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Hawaiana</h3>
+                        <p>Carne, salchicha, piña, jamón, lechuga, jitomate y aderezos.</p>
+                    </div>
+                    <span class="price-tag">$75</span>
+                </div>
+            </div>
+
+            <div class="menu-card featured" data-category="hamburguesas">
+                <div class="card-img">
+                    <img src="hamburguesasirlon.jpg" alt="Sirloin Burger">
+                    <span class="badge-mini">Premium</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Sirloin Burger</h3>
+                        <p>100% Carne de Sirloin, preparada con nuestra receta especial.</p>
+                    </div>
+                    <span class="price-tag">$80</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="antojitos">
+                <div class="card-img">
+                    <img src="tacos.jpg" alt="Tacos">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Tacos (Pieza)</h3>
+                        <p>Bistec (natural/adobado), chorizo, cabeza, costilla o milanesa.</p>
+                    </div>
+                    <span class="price-tag">$10</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="antojitos">
+                <div class="card-img">
+                    <img src="burrito.jpg" alt="Burritos">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Burritos</h3>
+                        <p>Tortilla de harina gigante rellena de nuestros mejores guisos.</p>
+                    </div>
+                    <span class="price-tag">$50</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="antojitos">
+                <div class="card-img">
+                    <img src="torta.jpg" alt="Tortas">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Tortas</h3>
+                        <p>Telera crujiente con el relleno de tu elección y vegetales.</p>
+                    </div>
+                    <span class="price-tag">$40</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="antojitos">
+                <div class="card-img">
+                    <img src="quesadilla.jpg" alt="Quesadillas">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Quesadillas</h3>
+                        <p>Sencillas o con guiso. El complemento ideal para tu juego.</p>
+                    </div>
+                    <span class="price-tag">$30</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="antojitos">
+                <div class="card-img">
+                    <img src="gordita.jpg" alt="Gorditas">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Gorditas</h3>
+                        <p>Recién hechas y rellenas con el guiso que más te guste.</p>
+                    </div>
+                    <span class="price-tag">$25</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="snacks">
+                <div class="card-img">
+                    <img src="hotdog.jpg" alt="Hot Dogs">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Hot-Dogs</h3>
+                        <p>Sencillo ($25) o con carne ($30). Rápidos y deliciosos.</p>
+                    </div>
+                    <span class="price-tag">$25+</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="snacks">
+                <div class="card-img">
+                    <img src="alitas.jpg" alt="Alitas">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Alitas (Orden 500g)</h3>
+                        <p>Jugosas piezas bañadas en salsa. Ideales para compartir.</p>
+                    </div>
+                    <span class="price-tag">$110</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="snacks">
+                <div class="card-img">
+                    <img src="boneless.jpg" alt="Boneless">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Boneless (Orden 500g)</h3>
+                        <p>Pechuga de pollo crujiente sin hueso con tu salsa favorita.</p>
+                    </div>
+                    <span class="price-tag">$120</span>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="bebidas">
+                <div class="card-img">
+                    <img src="frape.png" alt="Frappés">
+                </div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <h3>Frappé Especial</h3>
+                        <p>Oreo, Mazapán, Capuchino o Mangonadas. ¡Pregunta por más!</p>
+                    </div>
+                    <span class="price-tag">$Varía</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Contenedor General */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section-title { text-align: center; margin-bottom: 40px; font-weight: 900; font-size: 2.5rem; }
+    .section-title span { color: var(--naranja); }
+
+    /* Filtros Minimalistas */
+    .menu-filters { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+    .filter-btn {
+        background: transparent;
+        color: #888;
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        border-bottom: 2px solid transparent;
+    }
+    .filter-btn.active { color: var(--naranja); border-bottom: 2px solid var(--naranja); }
+
+    /* Grid de Tarjetas */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    /* Tarjeta Minimalista */
+    .menu-card {
+        background: #1a1a1a;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid #2a2a2a;
+    }
+    .menu-card:hover { transform: translateY(-10px); border-color: #444; }
+
+    /* Contenedor de Imagen */
+    .card-img {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+        position: relative;
+    }
+    .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Esto asegura que la imagen no se deforme */
+        transition: 0.5s;
+    }
+    .menu-card:hover .card-img img { transform: scale(1.1); }
+
+    /* Contenido de la Tarjeta */
+    .card-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 140px;
+    }
+    .card-info h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--blanco); }
+    .card-info p { font-size: 0.85rem; color: #888; line-height: 1.4; margin-bottom: 15px; }
+
+    /* Precio Estilizado */
+    .price-tag {
+        font-size: 1.2rem;
+        font-weight: 900;
+        color: var(--naranja);
+        align-self: flex-start;
+        background: rgba(255, 85, 0, 0.1);
+        padding: 4px 12px;
+        border-radius: 8px;
+    }
+
+    /* Badge pequeño */
+    .badge-mini {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: var(--naranja);
+        color: #000;
+        font-size: 0.7rem;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 20px;
+        text-transform: uppercase;
+    }
+</style>
+
+<script>
+    function filterMenu(category, event) {
+        const cards = document.querySelectorAll('.menu-card');
+        const buttons = document.querySelectorAll('.filter-btn');
+
+        // Actualizar botones
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        // Filtrar con pequeña animación
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                if (category === 'todos' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            }, 300);
+        });
+    }
+</script>
+
+    <a href="https://wa.me/4615468230" class="whatsapp-float" target="_blank">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.207l-.694 2.547 2.59-.68c.85.504 1.811.884 2.847.884 3.181 0 5.767-2.587 5.768-5.766 0-3.178-2.587-5.758-5.768-5.758zm3.611 8.288c-.144.404-.738.736-1.032.78-.294.043-.658.079-1.077-.055-.262-.085-.601-.191-1.026-.372-1.802-.773-2.964-2.61-3.053-2.731-.09-.121-.739-.983-.739-1.868s.459-1.321.622-1.491c.164-.17.357-.213.476-.213.119 0 .238.001.341.006.107.005.25-.04.391.302.143.348.487 1.189.529 1.275.042.085.07.184.013.298-.057.114-.085.184-.17.284-.085.1-.178.223-.255.327-.086.113-.176.234-.076.404.099.17.441.728.946 1.178.651.58 1.199.761 1.369.846.171.085.271.071.371-.043.1-.114.426-.496.54-.666.114-.17.228-.142.385-.085.157.057 1.008.476 1.179.562.171.085.284.128.326.213.042.085.042.49-.101.894z"/></svg>
+    </a>
+
+    <script>
+        // Efecto de scroll suave para los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animación simple al hacer scroll
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.menu-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if(cardTop < window.innerHeight - 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="footer-logo">POOL <span>BOLITA</span></h2>
+            <p>El mejor ambiente de billar y los snacks más irresistibles de Villagrán. ¡Te esperamos para la revancha!</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="https://wa.me/4615468230" aria-label="WhatsApp">WA</a>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <h3>Horario de Atención</h3>
+            <ul>
+                <li><span>Lunes - Domingo:</span> 10:00 AM - 11:00 PM</li>
+                <li><span>Cocina:</span> Cierre 10:45 PM</li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3>Encuéntranos</h3>
+            <p>Calle Hidalgo #510, Zona Centro</p>
+            <p>Villagrán, Guanajuato</p>
+            <div class="contact-phones">
+                <p><strong>WhatsApp 1:</strong> 461-546-82-30</p>
+                <p><strong>WhatsApp 2:</strong> 411-198-76-80</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Pool Bolita. Diseñado por <strong>KairosD</strong>.</p>
+    </div>
+</footer>
+
+<style>
+    .main-footer {
+        background-color: #0a0a0a;
+        padding: 80px 20px 20px;
+        border-top: 1px solid #1a1a1a;
+        margin-top: 50px;
+    }
+
+    .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+    }
+
+    .footer-logo {
+        font-weight: 900;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo span {
+        color: var(--naranja);
+    }
+
+    .footer-brand p {
+        color: #888;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .footer-info h3, .footer-contact h3 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .footer-info ul {
+        list-style: none;
+    }
+
+    .footer-info ul li {
+        color: #888;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .footer-info ul li span {
+        color: var(--naranja);
+        font-weight: bold;
+    }
+
+    .footer-contact p {
+        color: #888;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .contact-phones {
+        margin-top: 15px;
+    }
+
+    .contact-phones p strong {
+        color: var(--naranja);
+    }
+
+    /* Redes Sociales */
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-links a {
+        color: var(--blanco);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.8rem;
+        border: 1px solid #333;
+        padding: 8px 12px;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+
+    .social-links a:hover {
+        background: var(--naranja);
+        border-color: var(--naranja);
+        color: #000;
+    }
+
+    /* Bottom bar */
+    .footer-bottom {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid #1a1a1a;
+        font-size: 0.8rem;
+        color: #555;
+    }
+
+    .footer-bottom strong {
+        color: #888;
+    }
+
+    @media (max-width: 768px) {
+        .main-footer { padding: 50px 20px 20px; }
+        .footer-container { text-align: center; }
+        .social-links { justify-content: center; }
+    }
+</style>
+
+</body>
+</html>
